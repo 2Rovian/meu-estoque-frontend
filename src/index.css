@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+body{
+    @apply bg-[#F9FAFB];
+}
+
+.btn-primary{
+    @apply bg-[#2F80ED] hover:bg-[#2F80ED];
+}
+
+/* 
+    Background da página: #F9FAFB
+    Navbar / header: #2F80ED com texto branco
+    Botões principais: #2F80ED hover #1C64D1
+    Cards / inputs: #FFFFFF com borda #E5E7EB
+    Texto: primário #111827, secundário #6B7280 
+*/
