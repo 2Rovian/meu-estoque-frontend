@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import HeaderCompMenu from "./HeaderCompMenu";
 
 export default function HeaderComp(){
+    const currentPath = useLocation().pathname;
 
     const navLinks = [
       {label: 'Início', goto: '/'},
@@ -16,11 +17,11 @@ export default function HeaderComp(){
 
             <nav className="space-x-6 hidden md:block">
               {navLinks.map((item, index) => (
-                <Link key={index} to={item.goto} className="text-xl text-slate-300 hover:text-white duration-200 ease-in-out">{item.label}</Link>
+                <Link key={index} to={item.goto} className={`text-xl hover:text-white ${currentPath === item.goto ? "text-white" : "text-slate-300"} duration-200 ease-in-out`}>{item.label}</Link>
               ))}
             </nav>
 
-            <HeaderCompMenu navLinks={navLinks}/>
+            <HeaderCompMenu currentPath={currentPath} navLinks={navLinks}/>
 
           </div>
         </header>

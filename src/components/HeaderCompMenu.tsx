@@ -8,9 +8,10 @@ interface HeaderCompMenuProps {
         label: string;
         goto: string;
     }[];
+    currentPath: string;
 }
 
-export default function HeaderCompMenu({ navLinks }: HeaderCompMenuProps) {
+export default function HeaderCompMenu({ navLinks, currentPath }: HeaderCompMenuProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleToggleIsMenuOpen = () => {
@@ -26,8 +27,8 @@ export default function HeaderCompMenu({ navLinks }: HeaderCompMenuProps) {
             {isMenuOpen &&
                 <div className="absolute top-full left-0 right-0 bg-[#2F80ED] shadow-xl md:hidden z-10">
                     <nav className="flex flex-col py-2 px-4 space-y-2">
-                        {navLinks.map((item: {label: string, goto: string}, index: number) => (
-                            <Link key={index} to={'/inicio'} className="py-2 hover:bg-white/10 px-2 rounded-md">{item.label}</Link>
+                        {navLinks.map((item: { label: string, goto: string }, index: number) => (
+                            <Link key={index} to={item.goto} className={`py-2 hover:bg-white/10 ${currentPath === item.goto ? "text-white" : "text-slate-300"} px-2 rounded-md`}>{item.label}</Link>
                         ))}
                     </nav>
                 </div>
