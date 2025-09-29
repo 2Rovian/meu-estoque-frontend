@@ -12,7 +12,7 @@ export default function HeaderComp(){
     return(
         <header className="bg-[#2F80ED] text-white py-4 shadow-md relative">
           <div className="container mx-auto px-4 flex justify-between items-center">
-            <h1 className="text-2xl font-bold">MeuEstoque</h1>
+            <Link to={'/'} className="text-2xl font-bold">MeuEstoque</Link>
 
             <nav className="space-x-6 hidden md:block">
               {navLinks.map((item, index) => (

@@ -10,10 +10,6 @@ export default function HomePage() {
             <HeroComp />
 
             <FeaturesComp />
-
-            <footer className="bg-gray-100 text-center py-4 text-gray-600">
-                feito por <a href="https://github.com/2Rovian" target="_blank" className="">Rovian</a>
-            </footer> 
         </div>
     )
 }
