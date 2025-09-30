@@ -16,7 +16,7 @@ export default function TabelProductsComp() {
             <table className="w-full table-auto">
                 <thead className="bg-gray-100 text-[#111827]">
                     <tr>
-                        {tableHeadNames.map((thItem) => 
+                        {tableHeadNames.map((thItem) =>
                             <th className={`px-6 py-3 ${thItem == 'Ações' ? "text-center" : "text-left"}`}>{thItem}</th>
                         )}
                     </tr>
@@ -29,14 +29,17 @@ export default function TabelProductsComp() {
                             <td className="px-6 py-3">{produto.categoria}</td>
                             <td className="px-6 py-3">{produto.quantidade}</td>
                             <td className="px-6 py-3">R$ {produto.preco.toFixed(2)}</td>
-                            <td className="px-6 py-3 text-center space-x-2">
-                                <button className="bg-[#2F80ED] text-white px-3 py-1 rounded hover:bg-[#1C64D1] duration-200 ease-in-out">
-                                    Editar
-                                </button>
-                                <button className="bg-white border border-[#c0c2c5] text-[#111827] hover:text-white px-3 py-1 rounded hover:bg-[#d12424] duration-200 ease-in-out">
-                                    Excluir
-                                </button>
+                            <td className="px-6 py-3 text-center">
+                                <div className="flex justify-center gap-2">
+                                    <button className="bg-[#2F80ED] text-white px-3 py-1 rounded flex-1 max-w-[80px] hover:bg-[#1C64D1] duration-200 ease-in-out">
+                                        Editar
+                                    </button>
+                                    <button className="bg-white border border-[#c0c2c5] text-[#111827] px-3 py-1 rounded flex-1 max-w-[80px] hover:bg-[#d12424] hover:text-white duration-200 ease-in-out">
+                                        Excluir
+                                    </button>
+                                </div>
                             </td>
+
                         </tr>
                     ))}
                 </tbody>
