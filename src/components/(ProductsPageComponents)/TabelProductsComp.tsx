@@ -1,36 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { RiCheckFill, RiCloseFill } from "react-icons/ri";
 
 interface produtoProps {
     id: number;
-    nome: string;
-    categoria: string;
-    quantidade: number;
-    preço: number
+    name: string;
+    category: string;
+    quantity: number;
+    price: number
 }
 
 export default function TabelProductsComp() {
-    const [produtos] = useState<produtoProps[]>([
-        { id: 1, nome: "Notebook", categoria: "Eletrônicos", quantidade: 12, preço: 3500.00 },
-        { id: 2, nome: "Cadeira Gamer", categoria: "Móveis", quantidade: 5, preço: 1200.00 },
-        { id: 3, nome: "Teclado Mecânico", categoria: "Acessórios", quantidade: 20, preço: 450.00 },
-        { id: 4, nome: "Geladeira 3000", categoria: "Eletrônicos", quantidade: 5, preço: 2000.00 },
-    ]);
+
+    const [produtos, setProdutos] = useState<produtoProps[]>([]);
+
+    useEffect(() => {
+        const handleFetchProdutos = async () => {
+            const response = await fetch("http://localhost:8080/api/produtos");
+            const produtosData = await response.json();
+            setProdutos(produtosData);
+        }
+
+        handleFetchProdutos()
+    }, []);
 
     const [editRow, setEditRow] = useState<produtoProps[]>([]);
 
     const tableHeadNames = [
         'ID', 'Nome', 'Categoria', 'Quantidade', 'Preço (R$)', 'Ações'
-    ]
+    ];
 
     const handleAddEditRow = (produto: produtoProps) => {
         const novoProduto: produtoProps = {
-            categoria: produto.categoria,
+            category: produto.category,
             id: produto.id,
-            nome: produto.nome,
-            preço: produto.preço,
-            quantidade: produto.quantidade
+            name: produto.name,
+            price: produto.price,
+            quantity: produto.quantity
         }
         setEditRow([...editRow, novoProduto])
     }
@@ -45,7 +51,7 @@ export default function TabelProductsComp() {
                 <thead className="bg-gray-100 text-[#111827]">
                     <tr>
                         {tableHeadNames.map((thItem) =>
-                            <th className={`px-6 py-3 ${thItem == 'Ações' ? "text-center" : "text-left"}`}>{thItem}</th>
+                            <th key={thItem} className={`px-6 py-3 ${thItem == 'Ações' ? "text-center" : "text-left"}`}>{thItem}</th>
                         )}
                     </tr>
                 </thead>
@@ -61,10 +67,10 @@ export default function TabelProductsComp() {
                                     <>
                                         <input type="text"
                                             className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                            placeholder={produto.nome}
+                                            placeholder={produto.name}
                                         />
                                     </>) :
-                                    (<>{produto.nome}</>)
+                                    (<>{produto.name}</>)
                                 }
 
                             </td>
@@ -72,9 +78,9 @@ export default function TabelProductsComp() {
                                 {editRow.some((item) => item.id == produto.id) ? (<>
                                     <input type="text"
                                         className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                        placeholder={produto.categoria}
+                                        placeholder={produto.category || "Sem categoria"}
                                     />
-                                </>) : (<>{produto.categoria}</>)
+                                </>) : (<>{produto.category || "Sem Categoria"}</>)
                                 }
 
                             </td>
@@ -82,9 +88,9 @@ export default function TabelProductsComp() {
                                 {editRow.some((item) => item.id == produto.id) ? (<>
                                     <input type="text"
                                         className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                        placeholder={(produto.quantidade).toString()}
+                                        placeholder={(produto.quantity).toString()}
                                     />
-                                </>) : (<>{produto.quantidade}</>)
+                                </>) : (<>{produto.quantity}</>)
                                 }
                             </td>
 
@@ -92,9 +98,9 @@ export default function TabelProductsComp() {
                                 {editRow.some((item) => item.id == produto.id) ? (<>
                                     <input type="number"
                                         className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                        placeholder={(produto.preço.toFixed(2)).toString()}
+                                        placeholder={(produto.price.toFixed(2)).toString()}
                                     />
-                                </>) : (<>{produto.preço.toFixed(2)}</>)
+                                </>) : (<>{produto.price.toFixed(2)}</>)
 
                                 }
                             </td>
