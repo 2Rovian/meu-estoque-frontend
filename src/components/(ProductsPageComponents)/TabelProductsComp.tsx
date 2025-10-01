@@ -11,15 +11,14 @@ interface produtoProps {
 }
 
 export default function TabelProductsComp() {
-    const [produtos] = useState([
+    const [produtos] = useState<produtoProps[]>([
         { id: 1, nome: "Notebook", categoria: "Eletrônicos", quantidade: 12, preço: 3500.00 },
         { id: 2, nome: "Cadeira Gamer", categoria: "Móveis", quantidade: 5, preço: 1200.00 },
         { id: 3, nome: "Teclado Mecânico", categoria: "Acessórios", quantidade: 20, preço: 450.00 },
         { id: 4, nome: "Geladeira 3000", categoria: "Eletrônicos", quantidade: 5, preço: 2000.00 },
     ]);
 
-    const [editRow, setEditRow] = useState<produtoProps[]>([
-    ]);
+    const [editRow, setEditRow] = useState<produtoProps[]>([]);
 
     const tableHeadNames = [
         'ID', 'Nome', 'Categoria', 'Quantidade', 'Preço (R$)', 'Ações'
