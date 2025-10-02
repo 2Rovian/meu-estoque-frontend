@@ -1,14 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import type { produtoProps } from "./TabelProductsComp";
 
+interface TabelProductsCompEditModalProps {
+    produto: produtoProps,
+    handleCloseModal: () => void
+}
 
-export default function AddProductCompForm() {
+export default function TabelProductsCompEditModal({ produto, handleCloseModal }: TabelProductsCompEditModalProps){
 
-    const [name, setName] = useState<string>("");
-    const [category, setCategory] = useState<string>("");
-    const [quantity, setQuantity] = useState<number>(1);
-    const [price, setPrice] = useState<number>(0);
+    const [name, setName] = useState<string>(produto.name);
+    const [category, setCategory] = useState<string>(produto.category);
+    const [quantity, setQuantity] = useState<number>(produto.quantity);
+    const [price, setPrice] = useState<number>(produto.price);
 
 
     const inputFields = [
@@ -32,21 +37,19 @@ export default function AddProductCompForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!name || !category || !quantity || !price) { 
-            toast.error("Preencha todos os campos"); 
-            return;
-        }
+        
         try {
-            await axios.post("http://localhost:8080/api/produtos", {
+            await axios.put(`http://localhost:8080/api/produtos/${produto.id}`, {
                 name,
                 category,
                 quantity,
                 price
             });
-            toast.success("Produto adicionado com sucesso");
+            toast.success("Produto editado com sucesso");
+            handleCloseModal();
         } catch(err) {
             console.error(err);
-            toast.error("Erro ao adicionar produto")
+            toast.error("Erro ao editar produto")
         }
     };
 
@@ -60,7 +63,7 @@ export default function AddProductCompForm() {
     return (
         <form onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} className="space-y-4">
             {inputFields.map((field) =>
-                <div>
+                <div key={field.id}>
                     <label htmlFor={field.id} className="block text-sm font-medium text-[#111827]">
                         {field.label}
                     </label>
@@ -83,7 +86,7 @@ export default function AddProductCompForm() {
                     type="submit"
                     className="cursor-pointer bg-[#2F80ED] text-white px-4 py-2 rounded-lg shadow hover:bg-[#1C64D1] duration-200 ease-out"
                 >
-                    Adicionar Produto
+                    Editar produto
                 </button>
             </div>
         </form>

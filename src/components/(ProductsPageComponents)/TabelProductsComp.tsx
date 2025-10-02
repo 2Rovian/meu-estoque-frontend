@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { RiCheckFill, RiCloseFill } from "react-icons/ri";
 import ModalComp from "../ModalComp";
 import TabelProductsCompDeleteModal from "./TabelProductsCompDeleteModal";
+import TabelProductsCompEditModal from "./TabelProductsCompEditModal";
 
 export interface produtoProps {
     id: number;
@@ -16,7 +16,10 @@ export default function TabelProductsComp() {
 
     const [produtos, setProdutos] = useState<produtoProps[]>([]);
     const [produtoDeletado, setProdutoDeletado] = useState<produtoProps>();
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState<boolean>(false);
+
+    const [isModalEditOpen, setIsModalEditOpen] = useState<boolean>(false);
+    const [produtoEditado, setProdutoEditado] = useState<produtoProps>();
 
     useEffect(() => {
         const handleFetchProdutos = async () => {
@@ -28,34 +31,26 @@ export default function TabelProductsComp() {
         handleFetchProdutos()
     }, []);
 
-    const [editRow, setEditRow] = useState<produtoProps[]>([]);
-
     const tableHeadNames = [
         'ID', 'Nome', 'Categoria', 'Quantidade', 'Preço (R$)', 'Ações'
     ];
 
-    const handleAddEditRow = (produto: produtoProps) => {
-        const novoProduto: produtoProps = {
-            category: produto.category,
-            id: produto.id,
-            name: produto.name,
-            price: produto.price,
-            quantity: produto.quantity
-        }
-        setEditRow([...editRow, novoProduto])
-    }
-
-    const handleDeleteEditRow = (produto: produtoProps) => {
-        setEditRow(editRow.filter((row) => row.id !== produto.id))
-    }
-
-    const handleOpenModal = (produto: produtoProps) => {
-        setIsModalOpen(true);
+    const handleOpenDeleteModal = (produto: produtoProps) => {
+        setIsModalDeleteOpen(true);
         setProdutoDeletado(produto);
     }
 
-    const handleCloseModal = () => {
-        setIsModalOpen(prevIsModalOpen => !prevIsModalOpen);
+    const handleCloseDeleteModal = () => {
+        setIsModalDeleteOpen(false);
+    }
+
+    const handleOpenEditModal = (produto: produtoProps) => {
+        setIsModalEditOpen(true);
+        setProdutoEditado(produto);
+    }
+
+    const handleCloseEditModal = () => {
+        setIsModalEditOpen(false);
     }
 
     return (
@@ -73,72 +68,29 @@ export default function TabelProductsComp() {
                         <tr key={produto.id} className="border-t border-[#c0c2c5]">
                             <td className="px-6 py-3">
                                 {produto.id}
-
                             </td>
                             <td className="px-6 py-3">
-                                {editRow.some((item) => item.id == produto.id) ? (
-                                    <>
-                                        <input type="text"
-                                            className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                            placeholder={produto.name}
-                                        />
-                                    </>) :
-                                    (<>{produto.name}</>)
-                                }
-
+                                {produto.name}
                             </td>
                             <td className="px-6 py-3">
-                                {editRow.some((item) => item.id == produto.id) ? (<>
-                                    <input type="text"
-                                        className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                        placeholder={produto.category || "Sem categoria"}
-                                    />
-                                </>) : (<>{produto.category || "Sem Categoria"}</>)
-                                }
-
+                                {produto.category || "Sem Categoria"}
                             </td>
                             <td className="px-6 py-3">
-                                {editRow.some((item) => item.id == produto.id) ? (<>
-                                    <input type="text"
-                                        className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                        placeholder={(produto.quantity).toString()}
-                                    />
-                                </>) : (<>{produto.quantity}</>)
-                                }
+                                {produto.quantity}
                             </td>
 
                             <td className="px-6 py-3">
-                                {editRow.some((item) => item.id == produto.id) ? (<>
-                                    <input type="number"
-                                        className="px-1 py-1 border-2 border-[#c0c2c5] focus:border-[#2F80ED] rounded-lg w-full sm:w-[80%] md:w-[70%] bg-white text-[#111827] focus:outline-none duration-200 ease-in-out text-center"
-                                        placeholder={(produto.price.toFixed(2)).toString()}
-                                    />
-                                </>) : (<>{produto.price.toFixed(2)}</>)
-
-                                }
+                                {produto.price.toFixed(2)}
                             </td>
                             <td className="px-6 py-3 text-center">
                                 <div className="flex justify-center gap-2">
-                                    {editRow.some((item) => item.id == produto.id) ? (<>
-                                        <button className="bg-[#2F80ED] text-white px-6 py-1 text-xl rounded cursor-pointer hover:bg-[#1C64D1] duration-200 ease-in-out">
-                                            <RiCheckFill />
+                                    <button onClick={() => handleOpenEditModal(produto)} className="bg-[#2F80ED] text-white px-6 py-1 rounded cursor-pointer hover:bg-[#1C64D1] duration-200 ease-in-out">
+                                        Editar
+                                    </button>
+                                    <button onClick={() => handleOpenDeleteModal(produto)} className="bg-white border border-[#c0c2c5] text-[#111827] px-3 py-1 rounded cursor-pointer hover:bg-[#d12424] hover:text-white duration-200 ease-in-out">
+                                        <FaRegTrashAlt />
+                                    </button>
 
-                                        </button>
-
-                                        <button onClick={() => handleDeleteEditRow(produto)} className="bg-white border border-[#c0c2c5] text-[#111827] px-3 py-1 text-xl rounded cursor-pointer hover:bg-[#d12424] hover:text-white duration-200 ease-in-out">
-                                            <RiCloseFill />
-
-                                        </button>
-
-                                    </>) : (<>
-                                        <button onClick={() => handleAddEditRow(produto)} className="bg-[#2F80ED] text-white px-6 py-1 rounded cursor-pointer hover:bg-[#1C64D1] duration-200 ease-in-out">
-                                            Editar
-                                        </button>
-                                        <button onClick={() => handleOpenModal(produto)} className="bg-white border border-[#c0c2c5] text-[#111827] px-3 py-1 rounded cursor-pointer hover:bg-[#d12424] hover:text-white duration-200 ease-in-out">
-                                            <FaRegTrashAlt />
-                                        </button>
-                                    </>)
-                                    }
 
                                 </div>
                             </td>
@@ -147,11 +99,20 @@ export default function TabelProductsComp() {
                     ))}
                 </tbody>
             </table>
-            {isModalOpen && (
-                <ModalComp handleCloseModal={handleCloseModal}>
+            {isModalDeleteOpen && (
+                <ModalComp handleCloseModal={handleCloseDeleteModal}>
                     <TabelProductsCompDeleteModal
                         produto={produtoDeletado!}
-                        handleCloseModal={handleCloseModal}
+                        handleCloseModal={handleCloseDeleteModal}
+                    />
+                </ModalComp>
+            )}
+            {isModalEditOpen && (
+                <ModalComp handleCloseModal={handleCloseEditModal}>
+                    <p className="text-lg mb-2">Editando "<span className="font-semibold">{produtoEditado?.name}</span>" </p>
+                    <TabelProductsCompEditModal
+                        produto={produtoEditado!}
+                        handleCloseModal={handleCloseEditModal}
                     />
                 </ModalComp>
             )}

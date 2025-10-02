@@ -20,7 +20,7 @@ export default function AddProductComp() {
                 "
             />
             <button onClick={() => setIsModalOpen(true)} className="bg-[#2F80ED] text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-[#1C64D1] shadow duration-200 ease-in-out">
-                + Adicionar Produto
+                Adicionar Produto
             </button>
 
             {isModalOpen && 
