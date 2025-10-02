@@ -1,15 +1,13 @@
-import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import useAddProduct from "../hooks/useAddProduct";
 
 
-export default function AddProductCompForm() {
+export default function AddProductCompFormModal() {
 
     const [name, setName] = useState<string>("");
     const [category, setCategory] = useState<string>("");
     const [quantity, setQuantity] = useState<number>(1);
     const [price, setPrice] = useState<number>(0);
-
 
     const inputFields = [
         {
@@ -30,26 +28,6 @@ export default function AddProductCompForm() {
         },
     ];
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!name || !category || !quantity || !price) { 
-            toast.error("Preencha todos os campos"); 
-            return;
-        }
-        try {
-            await axios.post("http://localhost:8080/api/produtos", {
-                name,
-                category,
-                quantity,
-                price
-            });
-            toast.success("Produto adicionado com sucesso");
-        } catch(err) {
-            console.error(err);
-            toast.error("Erro ao adicionar produto")
-        }
-    };
-
     const handleClearInputs = () => {
         setCategory("");
         setName("");
@@ -57,8 +35,10 @@ export default function AddProductCompForm() {
         setQuantity(0);
     }
 
+    const { handleAddProduct } = useAddProduct({ name,category, quantity, price });
+
     return (
-        <form onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} className="space-y-4">
+        <form onClick={(e) => e.stopPropagation()} onSubmit={handleAddProduct} className="space-y-4">
             {inputFields.map((field) =>
                 <div>
                     <label htmlFor={field.id} className="block text-sm font-medium text-[#111827]">

@@ -1,6 +1,5 @@
-import axios from "axios";
-import type { produtoProps } from "./TabelProductsComp";
-import toast from "react-hot-toast";
+import type { produtoProps } from "../../types/ProdutoType";
+import useDeleteProduct from "../hooks/useDeleteProduct";
 
 interface TabelProductsCompDeleteModalProps {
     produto: produtoProps;
@@ -9,18 +8,7 @@ interface TabelProductsCompDeleteModalProps {
 
 export default function TabelProductsCompDeleteModal({ handleCloseModal, produto }: TabelProductsCompDeleteModalProps) {
 
-    const handleDeleteProduct = async () => {
-        try {
-            await axios.delete(`http://localhost:8080/api/produtos/${produto.id}`);
-            toast.success("Produto excluído com sucesso");
-
-        } catch (error) {
-            toast.error("Erro ao excluir produto");
-            console.error(error);
-        } finally {
-            handleCloseModal();
-        }
-    };
+    const { handleDeleteProduct } = useDeleteProduct({handleCloseModal, produtoId: produto.id});
 
     return (
         <>

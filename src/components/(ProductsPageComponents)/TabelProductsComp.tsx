@@ -3,14 +3,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import ModalComp from "../ModalComp";
 import TabelProductsCompDeleteModal from "./TabelProductsCompDeleteModal";
 import TabelProductsCompEditModal from "./TabelProductsCompEditModal";
+import type { produtoProps } from "../../types/ProdutoType";
 
-export interface produtoProps {
-    id: number;
-    name: string;
-    category: string;
-    quantity: number;
-    price: number
-}
 
 export default function TabelProductsComp() {
 

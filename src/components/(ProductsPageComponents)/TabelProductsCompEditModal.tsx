@@ -1,14 +1,13 @@
-import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
-import type { produtoProps } from "./TabelProductsComp";
+import useEditProduct from "../hooks/useEditProduct";
+import type { produtoProps } from "../../types/ProdutoType";
 
 interface TabelProductsCompEditModalProps {
     produto: produtoProps,
     handleCloseModal: () => void
 }
 
-export default function TabelProductsCompEditModal({ produto, handleCloseModal }: TabelProductsCompEditModalProps){
+export default function TabelProductsCompEditModal({ produto, handleCloseModal }: TabelProductsCompEditModalProps) {
 
     const [name, setName] = useState<string>(produto.name);
     const [category, setCategory] = useState<string>(produto.category);
@@ -35,33 +34,14 @@ export default function TabelProductsCompEditModal({ produto, handleCloseModal }
         },
     ];
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
-        try {
-            await axios.put(`http://localhost:8080/api/produtos/${produto.id}`, {
-                name,
-                category,
-                quantity,
-                price
-            });
-            toast.success("Produto editado com sucesso");
-            handleCloseModal();
-        } catch(err) {
-            console.error(err);
-            toast.error("Erro ao editar produto")
-        }
-    };
-
-    const handleClearInputs = () => {
-        setCategory("");
-        setName("");
-        setPrice(0);
-        setQuantity(0);
-    }
+    const { handleEditProduct } = useEditProduct({
+        handleCloseModal, 
+        produtoId: produto.id, 
+        name, category, quantity, price
+    })
 
     return (
-        <form onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} className="space-y-4">
+        <form onClick={(e) => e.stopPropagation()} onSubmit={handleEditProduct} className="space-y-4">
             {inputFields.map((field) =>
                 <div key={field.id}>
                     <label htmlFor={field.id} className="block text-sm font-medium text-[#111827]">
@@ -81,7 +61,7 @@ export default function TabelProductsCompEditModal({ produto, handleCloseModal }
             )}
 
             <div className="flex gap-x-2 justify-end">
-                <button type="button" onClick={handleClearInputs} className="bg-white text-[#2F80ED] border border-[#2F80ED] px-6 py-3 rounded-lg shadow hover:bg-[#EBF4FF] cursor-pointer">Descartar</button>
+                <button type="button" onClick={handleCloseModal} className="bg-white text-[#2F80ED] border border-[#2F80ED] px-6 py-3 rounded-lg shadow hover:bg-[#EBF4FF] cursor-pointer">Descartar</button>
                 <button
                     type="submit"
                     className="cursor-pointer bg-[#2F80ED] text-white px-4 py-2 rounded-lg shadow hover:bg-[#1C64D1] duration-200 ease-out"
