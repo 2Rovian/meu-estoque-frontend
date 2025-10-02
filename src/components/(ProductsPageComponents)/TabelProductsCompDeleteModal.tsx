@@ -1,5 +1,5 @@
 import type { produtoProps } from "../../types/ProdutoType";
-import useDeleteProduct from "../hooks/useDeleteProduct";
+import useDeleteProduct from "../../hooks/useDeleteProduct";
 
 interface TabelProductsCompDeleteModalProps {
     produto: produtoProps;

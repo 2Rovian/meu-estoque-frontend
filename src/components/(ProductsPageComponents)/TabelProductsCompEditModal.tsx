@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useEditProduct from "../hooks/useEditProduct";
+import useEditProduct from "../../hooks/useEditProduct";
 import type { produtoProps } from "../../types/ProdutoType";
 
 interface TabelProductsCompEditModalProps {

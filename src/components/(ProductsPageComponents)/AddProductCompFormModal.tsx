@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAddProduct from "../hooks/useAddProduct";
+import useAddProduct from "../../hooks/useAddProduct";
 
 
 export default function AddProductCompFormModal() {
