@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import HeaderComp from "./components/HeaderComp";
 import AboutPage from "./pages/AboutPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/produtos" element={<ProductsPage />}/>
           <Route path="/sobre" element={<AboutPage />}/>
         </Routes>
+        <Toaster position="top-right"/>
       </BrowserRouter>
     </>
   )

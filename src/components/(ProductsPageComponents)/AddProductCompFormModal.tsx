@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 
 export default function AddProductCompForm() {
@@ -34,7 +35,7 @@ export default function AddProductCompForm() {
             quantity,
             price
         });
-        alert("Produto cadastrado com sucesso!")
+        toast.success("Produto cadastrado com sucesso!")
     };
 
     return (

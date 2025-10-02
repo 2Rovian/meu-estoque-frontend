@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { RiCheckFill, RiCloseFill } from "react-icons/ri";
+import ModalComp from "../ModalComp";
+import TabelProductsCompDeleteModal from "./TabelProductsCompDeleteModal";
 
-interface produtoProps {
+export interface produtoProps {
     id: number;
     name: string;
     category: string;
@@ -13,6 +15,8 @@ interface produtoProps {
 export default function TabelProductsComp() {
 
     const [produtos, setProdutos] = useState<produtoProps[]>([]);
+    const [produtoDeletado, setProdutoDeletado] = useState<produtoProps>();
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const handleFetchProdutos = async () => {
@@ -43,6 +47,15 @@ export default function TabelProductsComp() {
 
     const handleDeleteEditRow = (produto: produtoProps) => {
         setEditRow(editRow.filter((row) => row.id !== produto.id))
+    }
+
+    const handleOpenModal = (produto: produtoProps) => {
+        setIsModalOpen(true);
+        setProdutoDeletado(produto);
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(prevIsModalOpen => !prevIsModalOpen);
     }
 
     return (
@@ -121,11 +134,10 @@ export default function TabelProductsComp() {
                                         <button onClick={() => handleAddEditRow(produto)} className="bg-[#2F80ED] text-white px-6 py-1 rounded cursor-pointer hover:bg-[#1C64D1] duration-200 ease-in-out">
                                             Editar
                                         </button>
-                                        <button className="bg-white border border-[#c0c2c5] text-[#111827] px-3 py-1 rounded cursor-pointer hover:bg-[#d12424] hover:text-white duration-200 ease-in-out">
+                                        <button onClick={() => handleOpenModal(produto)} className="bg-white border border-[#c0c2c5] text-[#111827] px-3 py-1 rounded cursor-pointer hover:bg-[#d12424] hover:text-white duration-200 ease-in-out">
                                             <FaRegTrashAlt />
                                         </button>
                                     </>)
-                                        
                                     }
 
                                 </div>
@@ -135,6 +147,15 @@ export default function TabelProductsComp() {
                     ))}
                 </tbody>
             </table>
+            {isModalOpen && (
+                <ModalComp handleCloseModal={handleCloseModal}>
+                    <TabelProductsCompDeleteModal
+                        produto={produtoDeletado!}
+                        handleCloseModal={handleCloseModal}
+                    />
+                </ModalComp>
+            )}
+
         </div>
     )
 }

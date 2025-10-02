@@ -1,6 +1,6 @@
 import { useState } from "react"
 import ModalComp from "../ModalComp";
-import AddProductCompForm from "./AddProductCompForm";
+import AddProductCompForm from "./AddProductCompFormModal";
 
 
 export default function AddProductComp() {
