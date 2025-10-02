@@ -40,7 +40,7 @@ export default function AddProductCompFormModal() {
     return (
         <form onClick={(e) => e.stopPropagation()} onSubmit={handleAddProduct} className="space-y-4">
             {inputFields.map((field) =>
-                <div>
+                <div key={field.id}>
                     <label htmlFor={field.id} className="block text-sm font-medium text-[#111827]">
                         {field.label}
                     </label>
