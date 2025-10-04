@@ -3,8 +3,9 @@
 **MeuEstoque** é um projeto pessoal desenvolvido para estudos de **CRUD** utilizando **React** no frontend e **Java Spring Boot** no backend.  
 O objetivo é simular um sistema simples de controle de estoque, com operações de cadastro, listagem, edição e exclusão de produtos.
 
-## 🚀 Tecnologias
+<img width="1778" height="771" alt="Screenshot from 2025-10-04 16-39-18(2)" src="https://github.com/user-attachments/assets/07ca4b0c-b54c-4613-bee3-809a194a3bb7" />
 
+## 🚀 Tecnologias
 - **React** (Vite)
 - **TypeScript**
 - **Tailwind CSS**
