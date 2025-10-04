@@ -40,7 +40,7 @@ export default function ProductsPage() {
     }, [produtoNome, produtoCategoria]);
 
     return (
-        <main className="container mx-auto min-h-screen bg-[#F9FAFB] px-4 pt-6">
+        <main className="container mx-auto min-h-screen bg-[#F9FAFB] px-4 pt-6 max-w-6xl">
 
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-[#111827]">Produtos</h1>

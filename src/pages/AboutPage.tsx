@@ -1,6 +1,6 @@
 export default function AboutPage() {
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container px-4 py-8 mx-auto max-w-6xl">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">Sobre MeuEstoque</h1>
             <p className="text-gray-600 mb-6">
                 MeuEstoque é um projeto pessoal criado para praticar CRUD usando Java Spring no back-end
