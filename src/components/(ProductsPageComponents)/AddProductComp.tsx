@@ -2,14 +2,12 @@ import { useState } from "react"
 import ModalComp from "../ModalComp";
 import AddProductCompForm from "./AddProductCompFormModal";
 import { MdInventory2 } from "react-icons/md";
-// import type { produtoProps } from "../../types/ProdutoType";
 
 type buttonProps = "Nome" | "Categoria";
 
 interface AddProductCompProps {
     setProdutoNome: React.Dispatch<React.SetStateAction<string>>,
     setProdutoCategoria: React.Dispatch<React.SetStateAction<string>>
-    // setProdutos: React.Dispatch<React.SetStateAction<produtoProps[]>>,
 }
 
 export default function AddProductComp({ setProdutoNome, setProdutoCategoria }: AddProductCompProps) {
@@ -17,9 +15,6 @@ export default function AddProductComp({ setProdutoNome, setProdutoCategoria }: 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [toggleBtn, settoggleBtn] = useState<buttonProps>("Nome");
     const [inputValue, setInputValue] = useState<string>("");
-
-    // const [produtoNome, setProdutoNome] = useState<string>('');
-    // const [produtoCategoria, setProdutoCategoria] = useState<string>('');
 
     const handleCloseModal = () => {
         setIsModalOpen(prevIsModalOpen => !prevIsModalOpen);
@@ -37,43 +32,18 @@ export default function AddProductComp({ setProdutoNome, setProdutoCategoria }: 
         setProdutoCategoria("");
         setProdutoNome("");
         setInputValue("");
-
-
-        // toggleBtn === "Nome" ? settoggleBtn("Categoria") : settoggleBtn("Nome");
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value;
         setInputValue(value);
         
-        // if(toggleBtn == "Nome") {
-        //     setProdutoNome(inputValue);
-        // } else {
-        //     setProdutoCategoria(inputValue)
-        // }
-
         toggleBtn == "Nome" ? setProdutoNome(value) : setProdutoCategoria(value);
     }
-
-    // const handleSearchProductByName = (nome: string) => {
-    //     setProdutoNome(nome);
-    // }
-
-    // const handleSearchProductByCategory = (categoria: string) => {
-    //     setProdutoCategoria(categoria)
-    // }
 
     return (
         <div className="flex items-stretch gap-x-2 mb-6">
             <div className="flex items-center justify-between border-2 border-[#c0c2c5] group focus-within:border-[#2F80ED] rounded-lg bg-white text-[#111827] w-full focus:outline-none duration-200 ease-in-out">
-                {/* <input
-                    type="text"
-                    placeholder="Buscar produto..."
-                    className="focus:outline-none w-full group px-4 py-2"
-                    onChange={(e) => {
-                        toggleBtn === "Nome" ? setProdutoNome(e.target.value) : setProdutoCategoria(e.target.value)
-                    }}
-                /> */}
                 <input
                     type="text"
                     placeholder="Buscar produto..."

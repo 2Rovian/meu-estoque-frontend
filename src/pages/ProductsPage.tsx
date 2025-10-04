@@ -5,9 +5,6 @@ import type { produtoProps } from "../types/ProdutoType";
 
 export default function ProductsPage() {
 
-    // const handleSearchProductByName = () => { }
-    // const handleSearchProductByCategory = () => { }
-
     const [produtos, setProdutos] = useState<produtoProps[]>([]);
     const [produtoNome, setProdutoNome] = useState<string>('');
     const [produtoCategoria, setProdutoCategoria] = useState<string>('');
@@ -19,8 +16,28 @@ export default function ProductsPage() {
             setProdutos(produtosData);
         }
 
-        handleFetchProdutos()
-    }, []);
+
+        const handleFetchProdutosByName = async (produtoNome: string) => {
+            const response = await fetch(`http://localhost:8080/api/produtos?nome=${produtoNome}`);
+            const produtosData = await response.json();
+            setProdutos(produtosData);
+        }
+
+        const handleFetchProdutosByCategory = async (produtoCategoria: string) => {
+            const response = await fetch(`http://localhost:8080/api/produtos?categoria=${produtoCategoria}`);
+            const produtosData = await response.json();
+            setProdutos(produtosData);
+        }
+
+        if (produtoNome) {
+            handleFetchProdutosByName(produtoNome);
+        } else if (produtoCategoria) {
+            handleFetchProdutosByCategory(produtoCategoria);
+        } else {
+            handleFetchProdutos()
+        }
+
+    }, [produtoNome, produtoCategoria]);
 
     return (
         <main className="container mx-auto min-h-screen bg-[#F9FAFB] px-4 pt-6">
@@ -39,10 +56,6 @@ export default function ProductsPage() {
                 produtos={produtos}
             />
 
-            <div>
-                <p>Produto:  {produtoNome}</p>
-                <p>Categoria: {produtoCategoria}</p>
-            </div>
         </main>
     );
 

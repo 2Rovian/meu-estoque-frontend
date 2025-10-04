@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ModalComp from "../ModalComp";
 import TabelProductsCompDeleteModal from "./TabelProductsCompDeleteModal";
@@ -7,27 +7,15 @@ import type { produtoProps } from "../../types/ProdutoType";
 
 interface TabelProductsCompProps {
     produtos: produtoProps[],
-    // setProdutos: React.Dispatch<React.SetStateAction<produtoProps[]>>,
 }
 
 export default function TabelProductsComp({produtos}: TabelProductsCompProps) {
 
-    // const [produtos, setProdutos] = useState<produtoProps[]>([]);
     const [produtoDeletado, setProdutoDeletado] = useState<produtoProps>();
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState<boolean>(false);
 
     const [isModalEditOpen, setIsModalEditOpen] = useState<boolean>(false);
     const [produtoEditado, setProdutoEditado] = useState<produtoProps>();
-
-    // useEffect(() => {
-    //     const handleFetchProdutos = async () => {
-    //         const response = await fetch("http://localhost:8080/api/produtos");
-    //         const produtosData = await response.json();
-    //         setProdutos(produtosData);
-    //     }
-
-    //     handleFetchProdutos()
-    // }, []);
 
     const tableHeadNames = [
         'ID', 'Nome', 'Categoria', 'Quantidade', 'Preço (R$)', 'Ações'
