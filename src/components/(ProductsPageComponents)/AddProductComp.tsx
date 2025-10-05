@@ -46,7 +46,7 @@ export default function AddProductComp({ setProdutoNome, setProdutoCategoria }: 
             <div className="flex items-center justify-between border-2 border-[#c0c2c5] group focus-within:border-[#2F80ED] rounded-lg bg-white text-[#111827] w-full focus:outline-none duration-200 ease-in-out">
                 <input
                     type="text"
-                    placeholder="Buscar produto..."
+                    placeholder={`Buscar produto por ${toggleBtn.toLowerCase()}...`}
                     className="focus:outline-none w-full group px-4 py-2"
                     onChange={handleInputChange}
                     value={inputValue}
